@@ -57,12 +57,15 @@
                 let output = "";
                 for (let i = 0; i < data.items.length; i++) {
                     let book = data.items[i].volumeInfo;
-                    output += '<div class="book">';
+                   output += '<div class="book">';
                     output += '<h2>' + book.title + '</h2>';
-                    output += '<p>By: ' + book.authors + '</p>';
+                    output += '<p><strong>Author(s):</strong> ' + book.authors + '</p>';
+                    output += '<p><strong>Publisher:</strong> ' + book.publisher + '</p>';
+                    output += '<p><strong>Published:</strong> ' + book.publishedDate + '</p>';
+                    output += '<p><strong>Pages:</strong> ' + book.pageCount + '</p>';
                     output += '<img src="' + book.imageLinks.thumbnail + '">';
-                    output += "<p>" + book.description + "</p>";
-                    output += '</div>';
+                    output += '<p><strong>Description:</strong> ' + shortDesc + '</p>';
+                    
                 }
                 $("#books").html(output);
             });
