@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Weather Info</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            text-align: center;
+        }
+        h1 {
+            max-width: 600px;
+            margin: auto;
+            border: 10px solid #020403;
+            padding: 20px;
+            background-color: #dda15e;
+            margin-bottom: 30px;
+            border-radius: 90px;
+        }
+        #weather {
+            max-width: 600px;
+            margin: auto;
+            border: 10px solid #020403;
+            padding: 20px;
+            background-color: #dda15e;
+            border-radius: 90px;
+        }
+        p {
+            font-size: 18px;
+            margin: 15px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Weather Information</h1>
+    <div id="weather">Loading...</div>
+
+    <script>
+        $(document).ready(function() {
+            $.getJSON("weather.json", function(data) {
+                let output = "<h2>" + data.city + "</h2>";
+                output += "<p><strong>Temperature:</strong> " + data.temperature + "°F</p>";
+                output += "<p><strong>Conditions:</strong> " + data.weather + "</p>";
+                output += "<p><strong>Humidity:</strong> " + data.humidity + "%</p>";
+                output += "<p><strong>Wind:</strong> " + data.wind + " mph</p>";
+                
+                $("#weather").html(output);
+            });
+        });
+    </script>
+</body>
+</html>
