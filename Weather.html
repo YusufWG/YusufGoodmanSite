@@ -39,11 +39,11 @@
     <script>
         $(document).ready(function() {
             $.getJSON("weather.json", function(data) {
-                let output = "<h2>" + data.city + "</h2>";
-                output += "<p><strong>Temperature:</strong> " + data.temperature + "°F</p>";
-                output += "<p><strong>Conditions:</strong> " + data.weather + "</p>";
-                output += "<p><strong>Humidity:</strong> " + data.humidity + "%</p>";
-                output += "<p><strong>Wind:</strong> " + data.wind + " mph</p>";
+                let output = "<h2>" + data.name + "</h2>";
+                output += "<p><strong>Temperature:</strong> " + data.main.temp + "°F</p>";
+                output += "<p><strong>Conditions:</strong> " + data.weather[0].description + "</p>";
+                output += "<p><strong>Humidity:</strong> " + data.main.humidity + "%</p>";
+                output += "<p><strong>Wind:</strong> " + data.wind.speed + " mph</p>";
                 
                 $("#weather").html(output);
             });
