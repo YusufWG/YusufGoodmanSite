@@ -113,6 +113,7 @@ h2 {
     width: 80%;
     max-width: 800px;
     padding-top: 30px;
+    flex: 1; 
 }
 
 .site-overview h3 {
