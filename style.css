@@ -62,7 +62,6 @@ h2 {
     justify-content: space-around;
     margin-top: 40px;
     color: #dda15e;
-    border: 10px solid #020403;
     font-size: 32px;
     font-weight: bold;
 }
@@ -104,7 +103,6 @@ h2 {
     width: 80%;
     max-width: 800px;
     border-top: 2px solid #dda15e;
-    border: 10px solid #020403;
     padding-top: 30px;
 }
 
