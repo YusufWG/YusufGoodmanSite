@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Pictures</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body { text-align: center; }
+        img { width: 400px; height: 300px; border: 2px solid black; }
+        button { background: orange; padding: 10px 20px; margin: 10px; }
+    </style>
+</head>
+<body>
+
+<h1>My Pictures</h1>
+
+<img id="pic" src="">
+<p id="caption"></p>
+<p id="count"></p>
+
+<button id="prev">Previous</button>
+<button id="next">Next</button>
+
+<script>
+// YOUR IMAGES HERE (change these to your file names)
+let images = ["img1.jpg", "img2.jpg", "img3.jpg", "img4.jpg"];
+let captions = ["My first picture", "My second picture", "My third picture", "My fourth picture"];
+
+let num = 0;
+
+// Show first image
+$("#pic").attr("src", images[0]);
+$("#caption").text(captions[0]);
+$("#count").text("Image 1 of 4");
+
+// Next button
+$("#next").click(function() {
+    num = num + 1;
+    if (num == 4) { num = 0; }
+    $("#pic").attr("src", images[num]);
+    $("#caption").text(captions[num]);
+    $("#count").text("Image " + (num+1) + " of 4");
+});
+
+// Previous button
+$("#prev").click(function() {
+    num = num - 1;
+    if (num == -1) { num = 3; }
+    $("#pic").attr("src", images[num]);
+    $("#caption").text(captions[num]);
+    $("#count").text("Image " + (num+1) + " of 4");
+});
+</script>
+
+</body>
+</html>
+
+
