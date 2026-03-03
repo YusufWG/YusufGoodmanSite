@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Single Book</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            text-align: center ;
+            
+        }
+        #book {
+            max-width: 600px;
+            margin: auto;
+            border: 10px solid #020403;
+            padding: 20px;
+             background-color: #dda15e;
+             border-radius: 90px;
+             text-align: center ;
+        }
+        img {
+            max-width: 900px;
+            border: 2px solid #333;
+            border-radius: 10px;
+        }
+        h1 {
+             text-align: center ;
+             max-width: 600px;
+            margin: auto;
+            border: 10px solid #020403;
+            padding: 20px;
+             background-color: #dda15e;
+              margin-bottom: 30px;
+            border-radius: 90px;
+        }
+
+     
+
+
+
+       
+    </style>
+</head>
+<body>
+    <h1>Single Book Information</h1>
+    <div id="book">Loading...</div>
+
+    <script>
+        $(document).ready(function() {
+            $.getJSON("google-books-book.json", function(data) {
+                let book = data.volumeInfo;  // Fixed: volumeInfo not valueInfo
+                
+                let output = "<h2>" + book.title + "</h2>";  // Fixed closing tag
+                output += "<p><strong>Author:</strong> " + book.authors + "</p>";
+                output += "<img src='" + book.imageLinks.thumbnail + "'>";
+                output += "<p>" + book.description + "</p>";
+                
+                $("#book").html(output);
+            });
+        });
+    </script>
+</body>
+</html>

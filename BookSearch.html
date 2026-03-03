@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Books</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+
+        h1 {
+             text-align: center ;
+             max-width: 600px;
+            margin: auto;
+            border: 10px solid #020403;
+            padding: 20px;
+             background-color: #dda15e;
+              margin-bottom: 30px;
+            border-radius: 90px;
+        }
+
+        h2 {
+             text-align: center ;
+             max-width: 600px;
+            margin: auto;
+            border: 10px solid #020403;
+            padding: 20px;
+             background-color: #dda15e;
+              margin-bottom: 30px;
+            border-radius: 90px;
+        }
+
+        body {
+            font-family: Arial;
+            margin: 20px;
+            
+        }
+        .book {
+            
+            max-width: 600px;
+            margin: auto;
+            border: 10px solid #020403;
+            padding: 20px;
+             background-color: #dda15e;
+              margin-bottom: 30px;
+            border-radius: 90px;
+        }
+        img {
+            max-width: 100px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Search Results for books</h1>
+    <div id="books"></div>
+
+    <script>
+        $(document).ready(function() {
+            $.getJSON("google-books-search.json", function(data) {
+                let output = "";
+                for (let i = 0; i < data.items.length; i++) {
+                    let book = data.items[i].volumeInfo;
+                    output += '<div class="book">';
+                    output += '<h2>' + book.title + '</h2>';
+                    output += '<p>By: ' + book.authors + '</p>';
+                    output += '<img src="' + book.imageLinks.thumbnail + '">';
+                    output += "<p>" + book.description + "</p>";
+                    output += '</div>';
+                }
+                $("#books").html(output);
+            });
+        });
+    </script>
+</body>
+</html>
