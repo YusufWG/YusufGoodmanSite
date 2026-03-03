@@ -37,18 +37,19 @@
     <h1>Weather Information</h1>
     <div id="weather">Loading...</div>
 
-    <script>
-        $(document).ready(function() {
-            $.getJSON("weather.json", function(data) {
-                let output = "<h2>" + data.name + "</h2>";
-                output += "<p><strong>Temperature:</strong> " + data.main.temp + "°F</p>";
-                output += "<p><strong>Conditions:</strong> " + data.weather[0].description + "</p>";
-                output += "<p><strong>Humidity:</strong> " + data.main.humidity + "%</p>";
-                output += "<p><strong>Wind:</strong> " + data.wind.speed + " mph</p>";
-                
-                $("#weather").html(output);
-            });
+   <script>
+    $(document).ready(function() {
+        $.getJSON("weather.json", function(data) {
+            let tempF = ((data.main.temp - 273.15) * 1.8 + 32).toFixed(1);
+            let output = "<h2>" + data.name + "</h2>";
+            output += "<p><strong>Temperature:</strong> " + tempF + "°F</p>";
+            output += "<p><strong>Conditions:</strong> " + data.weather[0].description + "</p>";
+            output += "<p><strong>Humidity:</strong> " + data.main.humidity + "%</p>";
+            output += "<p><strong>Wind:</strong> " + data.wind.speed + " mph</p>";
+            
+            $("#weather").html(output);
         });
-    </script>
+    });
+</script>
 </body>
 </html>
