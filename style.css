@@ -50,7 +50,7 @@ h2 {
     min-width: 120px;
 }
 
-.book-button {
+.book-button button {
     background-color: #dda15e;
     color: black;
     border: 10px solid #020403;
