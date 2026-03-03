@@ -94,6 +94,7 @@ h2 {
     justify-content: center;
     padding: 20px;
     box-sizing: border-box;
+    border: 10px solid #020403;
 }
 
 .box h4 {
