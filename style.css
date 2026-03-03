@@ -46,6 +46,16 @@ h2 {
     cursor: pointer;
 }
 
+.b button {
+    background-color: #dda15e;
+    color: black;
+    border: 10px solid #020403;
+    padding: 15px 40px;
+    border-radius: 25px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
 /* Section headers */
 .section-titles {
     display: flex;
