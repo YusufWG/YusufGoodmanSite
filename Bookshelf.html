@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="Book.css">
+    <title>My Bookshelf</title>
+</head>
+<body>
+    <h1>My Bookshelf</h1>
+    <nav>
+        <a href="BSearch.html">Home</a>
+        <a href="Bookshelf.html">My Bookshelf</a>
+    </nav>
+
+    <h2>Books from My Public Bookshelf</h2>
+    
+    <div id="bookshelf-results"></div>
+
+    <script>
+        // This runs when page opens
+        function loadBookshelf() {
+            // Get the div where books go
+            let results = document.getElementById("bookshelf-results");
+            
+            // Your API key
+            let myKey = "AIzaSyBGnRdJBqQXwTR8MjmfEzqYfvdrjNiGKMg";
+            
+            // Your 5 book IDs
+            let bookIDs = [
+                "dUwiEQAAQBAJ",
+                "vrMTDgAAQBAJ",
+                "lX9JAQAAIAAJ",
+                "fJcJEAAAQBAJ",
+                "RXqyEAAAQBAJ"
+            ];
+            
+            // Loop through each book ID
+            for (let i = 0; i < bookIDs.length; i++) {
+                
+                // URL for this book
+                let url = "https://www.googleapis.com/books/v1/volumes/" + bookIDs[i] + "?key=" + myKey;
+                
+                // Get book from Google
+                fetch(url)
+                    .then(response => response.json())
+                    .then(book => {
+                        
+                        // Get title
+                        let title = book.volumeInfo.title;
+                        if (!title) title = "No title";
+                        
+                        // Get image
+                        let img = "";
+                        if (book.volumeInfo.imageLinks) {
+                            img = book.volumeInfo.imageLinks.thumbnail;
+                        }
+                        
+                        // Add book to page
+                        results.innerHTML += "<div>";
+                        results.innerHTML += "<a href='Details.html?id=" + book.id + "'><h3>" + title + "</h3></a>";
+                        if (img) results.innerHTML += "<img src='" + img + "'>";
+                        results.innerHTML += "</div><hr>";
+                    });
+            }
+        }
+        
+        // Start when page loads
+        window.onload = loadBookshelf;
+    </script>
+</body>
+</html>

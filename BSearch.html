@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="Book.css">
+    <title>Book Search</title>
+</head>
+<body>
+    <h1>Book Search</h1>
+    <nav>
+        <a href="BSearch.html">Home</a>
+        <a href="Bookshelf.html">My Bookshelf</a>
+    </nav>
+
+    <h2>Search Books</h2>
+    <input type="text" id="search">
+    <button onclick="searchBooks()">Search</button>
+
+    <br><br>
+
+    <select id="pageSelect" onchange="searchBooks()">
+        <option value="0">Page 1</option>
+        <option value="10">Page 2</option>
+        <option value="20">Page 3</option>
+        <option value="30">Page 4</option>
+        <option value="40">Page 5</option>
+        <option value="50">Page 6</option>
+    </select>
+
+    <div id="results"></div>
+
+    <script>
+        function searchBooks() {
+            let query = document.getElementById("search").value;
+            let startIndex = document.getElementById("pageSelect").value;
+
+            
+            let apiKey = "AIzaSyBGnRdJBqQXwTR8MjmfEzqYfvdrjNiGKMg";
+
+            fetch("https://www.googleapis.com/books/v1/volumes?q=" + query +
+                  "&startIndex=" + startIndex + "&maxResults=10&key=" + apiKey)
+                .then(res => res.json())
+                .then(data => {
+                    let results = document.getElementById("results");
+                    results.innerHTML = "";
+
+                    if (!data.items) {
+                        results.innerHTML = "No results found";
+                        return;
+                    }
+
+                    data.items.forEach(function(book) {
+                        let title = book.volumeInfo.title;
+                        let id = book.id;
+                        let img = book.volumeInfo.imageLinks ? book.volumeInfo.imageLinks.thumbnail : "";
+
+                        results.innerHTML += "<div>";
+                        results.innerHTML += "<a href='Details.html?id=" + id + "'><h3>" + title + "</h3></a>";
+                        if (img != "") results.innerHTML += "<img src='" + img + "'>";
+                        results.innerHTML += "</div><hr>";
+                    });
+                });
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="Book.css">
+    <title>Book Details</title>
+</head>
+<body>
+    <nav>
+        <a href="BSearch.html">Home</a>
+        <a href="Bookshelf.html">My Bookshelf</a>
+    </nav>
+
+    <div id="book-details">
+        <h1 id="book-title"></h1>
+        <img id="book-img" src="">
+        <p><strong>Author:</strong> <span id="book-authors"></span></p>
+        <p><strong>Publisher:</strong> <span id="book-publisher"></span></p>
+        <p><strong>Price:</strong> <span id="book-price"></span></p>
+        
+        <h3>Brief Description:</h3>
+        <p id="book-description"></p>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const bookId = urlParams.get('id');
+        const apiKey = "AIzaSyBGnRdJBqQXwTR8MjmfEzqYfvdrjNiGKMg";
+
+        if (!bookId) {
+            document.getElementById("book-details").innerHTML = "No book selected";
+        } else {
+            fetch("https://www.googleapis.com/books/v1/volumes/" + bookId + "?key=" + apiKey)
+                .then(res => res.json())
+                .then(book => {
+                    let title = book.volumeInfo.title || "No title";
+                    let authors = book.volumeInfo.authors ? book.volumeInfo.authors.join(", ") : "Unknown";
+                    let publisher = book.volumeInfo.publisher || "Unknown";
+                    let description = book.volumeInfo.description || "No description";
+                    let img = book.volumeInfo.imageLinks ? book.volumeInfo.imageLinks.thumbnail : "";
+                    let price = book.saleInfo && book.saleInfo.listPrice ? "$" + book.saleInfo.listPrice.amount : "N/A";
+                    document.getElementById("book-title").innerText = title;
+                    document.getElementById("book-authors").innerText = authors;
+                    document.getElementById("book-publisher").innerText = publisher;
+                    document.getElementById("book-img").src = img;
+                    document.getElementById("book-description").innerText = description;
+                    document.getElementById("book-price").innerText = price;
+                });
+        }
+    </script>
+</body>
+</html>
