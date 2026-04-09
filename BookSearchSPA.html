@@ -1,0 +1,118 @@
+<html>
+<head>
+    <title>Google Books SPA</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="SPAstyle.css">
+</head>
+<body>
+
+<h1>Milestone 3: Google Books Search</h1>
+
+<h2>Search Books</h2>
+
+<div id="searchSection">
+    <input type="text" id="Sbox" placeholder="Lets find you something to read...">
+    <button id="Sbtn">Search</button>
+    <br><br>
+    <label for="pageSelect">Page:</label>
+    <select id="pageSelect" onchange="searchBooks()">
+        <option value="0">Page 1</option>
+        <option value="10">Page 2</option>
+        <option value="20">Page 3</option>
+        <option value="30">Page 4</option>
+        <option value="40">Page 5</option>
+    </select>
+</div>
+
+<div id="results"></div>
+
+<h2>Book Details</h2>
+<div id="details"></div>
+
+<h2>Recommended Books</h2>
+<div id="bookshelf"></div>
+
+<script>
+const apiKey = "AIzaSyBGnRdJBqQXwTR8MjmfEzqYfvdrjNiGKMg";
+
+function searchBooks() {
+    const query = $("#Sbox").val().trim();
+    const startIndex = $("#pageSelect").val();
+
+    if (!query) {
+        alert("Please enter a book to search :)");
+        return;
+    }
+
+    $.getJSON(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(query)}&startIndex=${startIndex}&maxResults=10&key=${apiKey}`, function(data) {
+        const results = data.items || [];
+        $("#results").empty();
+
+        if (results.length === 0) {
+            $("#results").html("<p>No results found</p>");
+            return;
+        }
+
+        results.forEach(function(book) {
+            const info = book.volumeInfo;
+            const title = info.title || "No title";
+            const img = info.imageLinks ? info.imageLinks.thumbnail : "";
+            const authors = info.authors ? info.authors.join(", ") : "Unknown";
+
+            $("#results").append(
+                `<div class="book" data-id="${book.id}">
+                    <img src="${img}">
+                    <p><b>${title}</b></p>
+                    <p>${authors}</p>
+                </div>`
+            );
+        });
+    });
+}
+
+$("#Sbtn").click(function() {
+    searchBooks();
+});
+
+$(document).on("click", ".book", function() {
+    const id = $(this).data("id");
+    $.getJSON(`https://www.googleapis.com/books/v1/volumes/${id}?key=${apiKey}`, function(book) {
+        const info = book.volumeInfo;
+        $("#details").html(
+            `<h3>${info.title || "No title"}</h3>
+             <p><b>Authors:</b> ${(info.authors || ["Unknown"]).join(", ")}</p>
+             <p>${info.description || "No description available"}</p>`
+        );
+    });
+});
+
+function loadBookshelf() {
+    const bookshelfIDs = [
+        "dUwiEQAAQBAJ",
+        "vrMTDgAAQBAJ",
+        "lX9JAQAAIAAJ",
+        "fJcJEAAAQBAJ",
+        "RXqyEAAAQBAJ"
+    ];
+
+    bookshelfIDs.forEach(function(id) {
+        $.getJSON(`https://www.googleapis.com/books/v1/volumes/${id}?key=${apiKey}`, function(book) {
+            const info = book.volumeInfo;
+            const title = info.title || "No title";
+            const img = info.imageLinks ? info.imageLinks.thumbnail : "";
+
+            $("#bookshelf").append(
+                `<div class="book" data-id="${book.id}">
+                    <img src="${img}">
+                    <p>${title}</p>
+                </div>`
+            );
+        });
+    });
+}
+
+loadBookshelf();
+</script>
+<h5>Powered By Google Books API</h5>
+</body>
+</html>
