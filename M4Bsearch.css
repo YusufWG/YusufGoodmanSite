@@ -1,32 +1,30 @@
-body { 
-    font-family: Arial; 
-    margin: 0; 
-    background-color: #E2DCCB; 
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background-color: #E2DCCB;
 }
 
 h1 {
     color: #405d27;
     background-color: #82b74b;
-    padding: 40px 0;
+    padding: 35px 0;
     text-align: center;
     margin: 0;
-    width: 100%;
-    box-sizing: border-box;
-    font-size: 50px;
+    font-size: 48px;
 }
 
-h2 { 
-    color: #3e4444; 
-    text-align: center; 
-    margin-top: 30px;
-    font-size: 30px;
+h2 {
+    color: #3e4444;
+    text-align: center;
+    margin-top: 25px;
+    font-size: 28px;
 }
 
-h5 { 
-    color: #3e4444; 
-    text-align: center; 
-    margin-top: 30px;
-    font-size: 15px;
+h5 {
+    color: #3e4444;
+    text-align: center;
+    margin: 30px 0;
+    font-size: 14px;
 }
 
 #searchSection {
@@ -34,26 +32,26 @@ h5 {
     margin: 20px 0;
 }
 
-#Sbox {  
-    color: white;
-    background-color: #405d27;
-    width: 500px; 
-    padding: 20px; 
-    font-size: 20px;
+#Sbox {
+    width: 450px;
+    padding: 15px;
+    font-size: 18px;
     border: none;
     border-radius: 10px;
+    background-color: #405d27;
+    color: white;
 }
 
-#Sbtn { 
-    padding: 10px 20px;
-    margin-left: 5px;
-    font-size: 20px;
+#Sbtn {
+    padding: 12px 18px;
+    margin-left: 8px;
+    font-size: 18px;
     border: none;
     border-radius: 10px;
     background-color: #82b74b;
     color: white;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: 0.2s ease;
 }
 
 #Sbtn:hover {
@@ -67,88 +65,96 @@ h5 {
 
 .controls button {
     margin: 5px;
-    padding: 8px 12px;
+    padding: 10px 14px;
     border: none;
     border-radius: 8px;
     background-color: #405d27;
     color: white;
     cursor: pointer;
+    transition: 0.2s ease;
 }
 
 .controls button:hover {
     background-color: #2f441d;
+    transform: scale(1.05);
 }
 
 #pageInfo {
     font-weight: bold;
     margin-left: 10px;
+    color: #333;
 }
 
-#results, #bookshelf {
+#results,
+#bookshelf {
+    margin-top: 20px;
+}
+
+.grid {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 30px;
-    margin-top: 20px;
+    gap: 25px;
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.book {
+    cursor: pointer;
+    background: white;
+    padding: 12px;
+    border-radius: 12px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    transition: 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.book:hover {
+    transform: scale(1.03);
+}
+
+.book img {
+    border: 3px solid black;
+    border-radius: 10px;
+    height: 180px;
+    width: auto;
+    margin-bottom: 10px;
+}
+
+.list .book {
+    flex-direction: row;
+    width: 80%;
+    text-align: left;
+    justify-content: flex-start;
+    gap: 20px;
+}
+
+.list .book img {
+    height: 140px;
 }
 
 .grid .book {
     width: 140px;
 }
 
-.list {
-    flex-direction: column;
-    align-items: center;
-}
-
-.list .book {
-    width: 80%;
-    flex-direction: row;
-    justify-content: flex-start;
-    text-align: left;
-    gap: 20px;
-}
-
-.book { 
-    cursor: pointer; 
-    display: flex;          
-    flex-direction: column;
-    align-items: center;
-    text-align: center;     
-    background: #fff;
-    padding: 10px;
-    border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-}
-
-.book img {  
-    border: 4px solid black; 
-    border-radius: 15px; 
-    height: 180px; 
-    width: auto;          
-    max-width: 100%;      
-    display: block;       
-    margin-bottom: 10px;
-}
-
-#details { 
-    max-width: 600px;
-    margin: auto;
-    border: 10px solid #405d27;
+#details {
+    max-width: 650px;
+    margin: 20px auto;
     padding: 20px;
     background-color: #82b74b;
-    border-radius: 30px;
+    border: 6px solid #405d27;
+    border-radius: 25px;
     text-align: center;
+    color: #1f1f1f;
 }
-
-#pageSelect {
-    color: azure;
-    background-color: #82b74b;
-    margin-top: 10px;
-    font-size: 16px;
-    padding: 5px;
-}
-
 
 @media (max-width: 600px) {
     #Sbox {
@@ -158,5 +164,6 @@ h5 {
     .list .book {
         flex-direction: column;
         text-align: center;
+        width: 90%;
     }
 }
