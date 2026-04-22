@@ -7,7 +7,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/4.2.0/mustache.min.js"></script>
 
-    <link rel="stylesheet" href="M4Bsearch.css">
+    <link rel="stylesheet" href="SPAstyle.css">
 </head>
 
 <body>
@@ -57,36 +57,29 @@ $(document).ready(function () {
     const apiKey = "AIzaSyBGnRdJBqQXwTR8MjmfEzqYfvdrjNiGKMg";
 
     let currentPage = 1;
-    let lastQuery = "";
+    let currentQuery = "";
 
     function searchBooks(change = 0) {
 
         currentPage += change;
         if (currentPage < 1) currentPage = 1;
 
-        if (!lastQuery) {
-            lastQuery = $("#Sbox").val().trim();
-        }
+        const input = $("#Sbox").val().trim();
+        if (input !== "") currentQuery = input;
 
-        if (!lastQuery) {
+        if (!currentQuery) {
             alert("Please enter a search term");
             return;
         }
 
         const startIndex = (currentPage - 1) * 10;
 
-        $.getJSON(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(lastQuery)}&startIndex=${startIndex}&maxResults=10&key=${apiKey}`)
-        .done(function (data) {
+        $.getJSON(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(currentQuery)}&startIndex=${startIndex}&maxResults=10&key=${apiKey}`, function (data) {
 
             const results = data.items || [];
             $("#results").empty();
 
             $("#pageInfo").text("Page: " + currentPage);
-
-            if (results.length === 0) {
-                $("#results").html("<p>No results found</p>");
-                return;
-            }
 
             results.forEach(book => {
 
@@ -101,9 +94,6 @@ $(document).ready(function () {
 
                 $("#results").append(html);
             });
-        })
-        .fail(function () {
-            $("#results").html("<p>Error loading results</p>");
         });
     }
 
@@ -111,8 +101,7 @@ $(document).ready(function () {
 
         const id = $(this).data("id");
 
-        $.getJSON(`https://www.googleapis.com/books/v1/volumes/${id}?key=${apiKey}`)
-        .done(function (book) {
+        $.getJSON(`https://www.googleapis.com/books/v1/volumes/${id}?key=${apiKey}`, function (book) {
 
             const info = book.volumeInfo;
 
@@ -140,8 +129,7 @@ $(document).ready(function () {
 
         ids.forEach(id => {
 
-            $.getJSON(`https://www.googleapis.com/books/v1/volumes/${id}?key=${apiKey}`)
-            .done(function (book) {
+            $.getJSON(`https://www.googleapis.com/books/v1/volumes/${id}?key=${apiKey}`, function (book) {
 
                 const info = book.volumeInfo;
 
@@ -157,17 +145,8 @@ $(document).ready(function () {
         });
     }
 
-    $("#gridBtn").click(function () {
-        $("#results, #bookshelf").removeClass("list").addClass("grid");
-    });
-
-    $("#listBtn").click(function () {
-        $("#results, #bookshelf").removeClass("grid").addClass("list");
-    });
-
     $("#Sbtn").click(function () {
         currentPage = 1;
-        lastQuery = $("#Sbox").val().trim();
         searchBooks();
     });
 
@@ -177,6 +156,14 @@ $(document).ready(function () {
 
     $("#prevPage").click(function () {
         searchBooks(-1);
+    });
+
+    $("#gridBtn").click(function () {
+        $("#results, #bookshelf").removeClass("list").addClass("grid");
+    });
+
+    $("#listBtn").click(function () {
+        $("#results, #bookshelf").removeClass("grid").addClass("list");
     });
 
     loadBookshelf();
