@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>M4Bsearch - Google Books SPA</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/4.2.0/mustache.min.js"></script>
+    <link rel="stylesheet" href="M4Bsearch.css">
+</head>
+
+<body>
+
+<h1>Google Books SPA</h1>
+<h2>Search Books</h2>
+
+<div id="searchSection">
+    <input type="text" id="Sbox" placeholder="Lets find you something to read...">
+    <button id="Sbtn">Search</button>
+</div>
+<div class="controls">
+    <button id="gridBtn">Grid View</button>
+    <button id="listBtn">List View</button>
+
+    <button id="prevPage">Prev</button>
+    <button id="nextPage">Next</button>
+
+    <span id="pageInfo"></span>
+</div>
+<div id="results" class="grid"></div>
+<h2>Book Details</h2>
+<div id="details"></div>
+<h2>Recommended Books</h2>
+<div id="bookshelf" class="grid"></div>
+
+<script id="book-template" type="x-tmpl-mustache">
+    <div class="book" data-id="{{id}}">
+        <img src="{{img}}">
+        <p><b>{{title}}</b></p>
+        <p>{{authors}}</p>
+    </div>
+</script>
+
+<script id="detail-template" type="x-tmpl-mustache">
+    <h3>{{title}}</h3>
+    <p><b>Authors:</b> {{authors}}</p>
+    <p>{{description}}</p>
+</script>
+
+<script>
+const apiKey = "AIzaSyBGnRdJBqQXwTR8MjmfEzqYfvdrjNiGKMg";
+
+let currentPage = 1;
+let currentQuery = "";
+function searchBooks(pageChange = 0) {
+
+    currentPage += pageChange;
+    if (currentPage < 1) currentPage = 1;
+
+    currentQuery = $("#Sbox").val().trim();
+
+    if (!currentQuery) {
+        alert("Please enter a search term");
+        return;
+    }
+
+    const startIndex = (currentPage - 1) * 10;
+
+    $.getJSON(
+        `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(currentQuery)}&startIndex=${startIndex}&maxResults=10&key=${apiKey}`,
+        function(data) {
+
+            const results = data.items || [];
+            $("#results").empty();
+
+            $("#pageInfo").text("Page: " + currentPage);
+
+            results.forEach(book => {
+                const info = book.volumeInfo;
+
+                const html = Mustache.render($("#book-template").html(), {
+                    id: book.id,
+                    title: info.title || "No title",
+                    authors: (info.authors || ["Unknown"]).join(", "),
+                    img: info.imageLinks ? info.imageLinks.thumbnail : ""
+                });
+
+                $("#results").append(html);
+            });
+        }
+    );
+}
+
+
+$(document).on("click", ".book", function() {
+
+    const id = $(this).data("id");
+
+    $.getJSON(`https://www.googleapis.com/books/v1/volumes/${id}?key=${apiKey}`, function(book) {
+
+        const info = book.volumeInfo;
+
+        const html = Mustache.render($("#detail-template").html(), {
+            title: info.title || "No title",
+            authors: (info.authors || ["Unknown"]).join(", "),
+            description: info.description || "No description available"
+        });
+
+        $("#details").html(html);
+    });
+});
+
+function loadBookshelf() {
+
+    const ids = [
+        "dUwiEQAAQBAJ",
+        "vrMTDgAAQBAJ",
+        "lX9JAQAAIAAJ",
+        "fJcJEAAAQBAJ",
+        "RXqyEAAAQBAJ"
+    ];
+
+    $("#bookshelf").empty();
+
+    ids.forEach(id => {
+        $.getJSON(`https://www.googleapis.com/books/v1/volumes/${id}?key=${apiKey}`, function(book) {
+
+            const info = book.volumeInfo;
+
+            const html = Mustache.render($("#book-template").html(), {
+                id: book.id,
+                title: info.title || "No title",
+                authors: (info.authors || ["Unknown"]).join(", "),
+                img: info.imageLinks ? info.imageLinks.thumbnail : ""
+            });
+
+            $("#bookshelf").append(html);
+        });
+    });
+}
+
+
+$("#gridBtn").click(function() {
+    $("#results, #bookshelf").removeClass("list").addClass("grid");
+});
+
+$("#listBtn").click(function() {
+    $("#results, #bookshelf").removeClass("grid").addClass("list");
+});
+
+
+$("#Sbtn").click(function() {
+    currentPage = 1;
+    searchBooks();
+});
+
+$("#nextPage").click(function() {
+    searchBooks(1);
+});
+
+$("#prevPage").click(function() {
+    searchBooks(-1);
+});
+loadBookshelf();
+
+</script>
+
+<h5>Powered by Google Books API</h5>
+
+</body>
+</html>
