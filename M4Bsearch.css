@@ -1,0 +1,162 @@
+body { 
+    font-family: Arial; 
+    margin: 0; 
+    background-color: #E2DCCB; 
+}
+
+h1 {
+    color: #405d27;
+    background-color: #82b74b;
+    padding: 40px 0;
+    text-align: center;
+    margin: 0;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 50px;
+}
+
+h2 { 
+    color: #3e4444; 
+    text-align: center; 
+    margin-top: 30px;
+    font-size: 30px;
+}
+
+h5 { 
+    color: #3e4444; 
+    text-align: center; 
+    margin-top: 30px;
+    font-size: 15px;
+}
+
+#searchSection {
+    text-align: center;
+    margin: 20px 0;
+}
+
+#Sbox {  
+    color: white;
+    background-color: #405d27;
+    width: 500px; 
+    padding: 20px; 
+    font-size: 20px;
+    border: none;
+    border-radius: 10px;
+}
+
+#Sbtn { 
+    padding: 10px 20px;
+    margin-left: 5px;
+    font-size: 20px;
+    border: none;
+    border-radius: 10px;
+    background-color: #82b74b;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#Sbtn:hover {
+    background-color: #6e9b3d;
+}
+
+.controls {
+    text-align: center;
+    margin: 15px 0;
+}
+
+.controls button {
+    margin: 5px;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 8px;
+    background-color: #405d27;
+    color: white;
+    cursor: pointer;
+}
+
+.controls button:hover {
+    background-color: #2f441d;
+}
+
+#pageInfo {
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+#results, #bookshelf {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 20px;
+}
+
+.grid .book {
+    width: 140px;
+}
+
+.list {
+    flex-direction: column;
+    align-items: center;
+}
+
+.list .book {
+    width: 80%;
+    flex-direction: row;
+    justify-content: flex-start;
+    text-align: left;
+    gap: 20px;
+}
+
+.book { 
+    cursor: pointer; 
+    display: flex;          
+    flex-direction: column;
+    align-items: center;
+    text-align: center;     
+    background: #fff;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.book img {  
+    border: 4px solid black; 
+    border-radius: 15px; 
+    height: 180px; 
+    width: auto;          
+    max-width: 100%;      
+    display: block;       
+    margin-bottom: 10px;
+}
+
+#details { 
+    max-width: 600px;
+    margin: auto;
+    border: 10px solid #405d27;
+    padding: 20px;
+    background-color: #82b74b;
+    border-radius: 30px;
+    text-align: center;
+}
+
+#pageSelect {
+    color: azure;
+    background-color: #82b74b;
+    margin-top: 10px;
+    font-size: 16px;
+    padding: 5px;
+}
+
+
+@media (max-width: 600px) {
+    #Sbox {
+        width: 90%;
+    }
+
+    .list .book {
+        flex-direction: column;
+        text-align: center;
+    }
+}
