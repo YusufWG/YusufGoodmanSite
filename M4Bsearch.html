@@ -4,11 +4,10 @@
     <meta charset="UTF-8">
     <title>M4Bsearch - Google Books SPA</title>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://unpkg.com/mustache@4.2.0/mustache.min.js"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/4.2.0/mustache.js"></script>
-
-    <link rel="stylesheet" href="M4Bsearch.css">
+    <link rel="stylesheet" href="SPAstyle.css">
 </head>
 
 <body>
@@ -18,7 +17,7 @@
 <h2>Search Books</h2>
 
 <div id="searchSection">
-    <input type="text" id="Sbox" placeholder="Lets find you something to read...">
+    <input type="text" id="Sbox" placeholder="Search for books...">
     <button id="Sbtn">Search</button>
 </div>
 
@@ -53,40 +52,31 @@
 </script>
 
 <script>
-$(document).ready(function () {
+$(function () {
 
     const apiKey = "AIzaSyBGnRdJBqQXwTR8MjmfEzqYfvdrjNiGKMg";
 
     let currentPage = 1;
     let currentQuery = "";
 
-    function searchBooks(change = 0) {
+    function renderBooks(url) {
 
-        currentPage += change;
-        if (currentPage < 1) currentPage = 1;
+        $.getJSON(url)
+            .done(function (data) {
 
-        const input = $("#Sbox").val().trim();
-        if (input !== "") currentQuery = input;
-
-        if (!currentQuery) {
-            alert("Please enter a search term");
-            return;
-        }
-
-        const startIndex = (currentPage - 1) * 10;
-
-        $.getJSON(
-            `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(currentQuery)}&startIndex=${startIndex}&maxResults=10&key=${apiKey}`,
-            function (data) {
-
-                const results = data.items || [];
                 $("#results").empty();
-
                 $("#pageInfo").text("Page: " + currentPage);
 
-                results.forEach(book => {
+                const items = data.items || [];
 
-                    const info = book.volumeInfo;
+                if (items.length === 0) {
+                    $("#results").html("<p>No results found</p>");
+                    return;
+                }
+
+                items.forEach(book => {
+
+                    const info = book.volumeInfo || {};
 
                     const html = Mustache.render($("#book-template").html(), {
                         id: book.id,
@@ -97,26 +87,46 @@ $(document).ready(function () {
 
                     $("#results").append(html);
                 });
-            }
-        );
+            });
+    }
+
+    function searchBooks(change = 0) {
+
+        currentPage += change;
+        if (currentPage < 1) currentPage = 1;
+
+        const input = $("#Sbox").val().trim();
+        if (input) currentQuery = input;
+
+        if (!currentQuery) {
+            alert("Enter a search term");
+            return;
+        }
+
+        const startIndex = (currentPage - 1) * 10;
+
+        const url = `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(currentQuery)}&startIndex=${startIndex}&maxResults=10&key=${apiKey}`;
+
+        renderBooks(url);
     }
 
     $(document).on("click", ".book", function () {
 
         const id = $(this).data("id");
 
-        $.getJSON(`https://www.googleapis.com/books/v1/volumes/${id}?key=${apiKey}`, function (book) {
+        $.getJSON(`https://www.googleapis.com/books/v1/volumes/${id}?key=${apiKey}`)
+            .done(function (book) {
 
-            const info = book.volumeInfo;
+                const info = book.volumeInfo || {};
 
-            const html = Mustache.render($("#detail-template").html(), {
-                title: info.title || "No title",
-                authors: (info.authors || ["Unknown"]).join(", "),
-                description: info.description || "No description available"
+                const html = Mustache.render($("#detail-template").html(), {
+                    title: info.title || "No title",
+                    authors: (info.authors || ["Unknown"]).join(", "),
+                    description: info.description || "No description available"
+                });
+
+                $("#details").html(html);
             });
-
-            $("#details").html(html);
-        });
     });
 
     function loadBookshelf() {
@@ -133,19 +143,20 @@ $(document).ready(function () {
 
         ids.forEach(id => {
 
-            $.getJSON(`https://www.googleapis.com/books/v1/volumes/${id}?key=${apiKey}`, function (book) {
+            $.getJSON(`https://www.googleapis.com/books/v1/volumes/${id}?key=${apiKey}`)
+                .done(function (book) {
 
-                const info = book.volumeInfo;
+                    const info = book.volumeInfo || {};
 
-                const html = Mustache.render($("#book-template").html(), {
-                    id: book.id,
-                    title: info.title || "No title",
-                    authors: (info.authors || ["Unknown"]).join(", "),
-                    img: info.imageLinks ? info.imageLinks.thumbnail : ""
+                    const html = Mustache.render($("#book-template").html(), {
+                        id: book.id,
+                        title: info.title || "No title",
+                        authors: (info.authors || ["Unknown"]).join(", "),
+                        img: info.imageLinks ? info.imageLinks.thumbnail : ""
+                    });
+
+                    $("#bookshelf").append(html);
                 });
-
-                $("#bookshelf").append(html);
-            });
         });
     }
 
