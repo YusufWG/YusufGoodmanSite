@@ -103,6 +103,7 @@ h5 {
     flex-direction: column;
     align-items: center;
     text-align: center;
+
     background-color: #82b74b;
     padding: 10px;
     border-radius: 18px;
@@ -110,13 +111,16 @@ h5 {
 }
 
 .book img {  
-    border: 3px solid #405d27; 
-    border-radius: 12px; 
-    height: 180px; 
-    width: auto;          
-    max-width: 100%;      
-    display: block;       
+    border: 3px solid #405d27;
+    border-radius: 12px;
+
+    height: 180px;
+    width: 100%;
+    object-fit: cover;
+
+    display: block;
     margin-bottom: 10px;
+
     background-color: #82b74b;
 }
 
@@ -130,6 +134,7 @@ h5 {
 
 .list .book img {
     height: 140px;
+    width: auto;
 }
 
 #details { 
