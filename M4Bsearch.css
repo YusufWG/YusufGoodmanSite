@@ -64,19 +64,26 @@ h5 {
 }
 
 .controls button {
+    padding: 10px 15px;
     margin: 5px;
-    padding: 10px 14px;
     border: none;
     border-radius: 8px;
     background-color: #405d27;
     color: white;
     cursor: pointer;
+    font-size: 14px;
     transition: 0.2s ease;
 }
 
 .controls button:hover {
     background-color: #2f441d;
     transform: scale(1.05);
+}
+
+.controls button.active {
+    background-color: #82b74b;
+    color: white;
+    transform: scale(1.08);
 }
 
 #pageInfo {
@@ -87,23 +94,25 @@ h5 {
 
 #results,
 #bookshelf {
+    display: flex;
     margin-top: 20px;
+    transition: all 0.3s ease;
 }
 
+/* GRID VIEW */
 .grid {
-    display: flex;
     flex-wrap: wrap;
     justify-content: center;
     gap: 25px;
 }
 
+/* LIST VIEW */
 .list {
-    display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 15px;
 }
 
+/* BOOK CARD */
 .book {
     cursor: pointer;
     background: white;
@@ -121,6 +130,7 @@ h5 {
     transform: scale(1.03);
 }
 
+/* IMAGE */
 .book img {
     border: 3px solid black;
     border-radius: 10px;
@@ -129,22 +139,26 @@ h5 {
     margin-bottom: 10px;
 }
 
+/* LIST MODE CARD */
 .list .book {
-    flex-direction: row;
     width: 80%;
+    flex-direction: row;
     text-align: left;
     justify-content: flex-start;
     gap: 20px;
 }
 
+/* LIST MODE IMAGE */
 .list .book img {
     height: 140px;
 }
 
+/* GRID MODE CARD SIZE */
 .grid .book {
     width: 140px;
 }
 
+/* DETAILS PANEL */
 #details {
     max-width: 650px;
     margin: 20px auto;
@@ -156,6 +170,7 @@ h5 {
     color: #1f1f1f;
 }
 
+/* RESPONSIVE */
 @media (max-width: 600px) {
     #Sbox {
         width: 90%;
