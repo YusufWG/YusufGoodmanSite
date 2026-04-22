@@ -1,12 +1,12 @@
 body { 
     font-family: Arial; 
     margin: 0; 
-    background-color: #E2DCCB; 
+    background-color: #ffffff; 
 }
 
 h1 {
-    color: #405d27;
-    background-color: #82b74b;
+    color: #ffffff;
+    background-color: #1e3a5f;
     padding: 40px 0;
     text-align: center;
     margin: 0;
@@ -14,14 +14,14 @@ h1 {
 }
 
 h2 { 
-    color: #3e4444; 
+    color: #1e3a5f; 
     text-align: center; 
     margin-top: 30px;
     font-size: 30px;
 }
 
 h5 { 
-    color: #3e4444; 
+    color: #555; 
     text-align: center; 
     margin-top: 30px;
     font-size: 15px;
@@ -33,12 +33,12 @@ h5 {
 }
 
 #Sbox {  
-    color: white;
-    background-color: #405d27;
+    color: #333;
+    background-color: #f1f5f9;
     width: 500px; 
     padding: 20px; 
     font-size: 20px;
-    border: none;
+    border: 2px solid #1e3a5f;
     border-radius: 10px;
 }
 
@@ -48,14 +48,14 @@ h5 {
     font-size: 20px;
     border: none;
     border-radius: 10px;
-    background-color: #82b74b;
+    background-color: #2563eb;
     color: white;
     cursor: pointer;
     transition: all 0.3s ease;
 }
 
 #Sbtn:hover {
-    background-color: #6e9b3d;
+    background-color: #1d4ed8;
 }
 
 .controls {
@@ -68,14 +68,14 @@ h5 {
     margin: 5px;
     border: none;
     border-radius: 8px;
-    background-color: #405d27;
+    background-color: #1e3a5f;
     color: white;
     cursor: pointer;
     transition: 0.2s ease;
 }
 
 .controls button:hover {
-    background-color: #2f441d;
+    background-color: #162c47;
     transform: scale(1.05);
 }
 
@@ -108,9 +108,9 @@ h5 {
     justify-content: center;
     text-align: center;
 
-    background-color: #82b74b;
+    background-color: #3b82f6;
     border-radius: 18px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
 .book img {  
@@ -141,16 +141,16 @@ h5 {
 #details { 
     max-width: 600px;
     margin: auto;
-    border: 10px solid #405d27;
+    border: 10px solid #1e3a5f;
     padding: 20px;
-    background-color: #82b74b;
+    background-color: #e0f2fe;
     border-radius: 30px;
     text-align: center;
 }
 
 #pageSelect {
-    color: azure;
-    background-color: #82b74b;
+    color: #1e3a5f;
+    background-color: #bae6fd;
     margin-top: 10px;
     font-size: 16px;
     padding: 5px;
