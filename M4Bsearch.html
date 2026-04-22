@@ -5,9 +5,10 @@
     <title>M4Bsearch - Google Books SPA</title>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/4.2.0/mustache.min.js"></script>
 
-    <link rel="stylesheet" href="SPAstyle.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/4.2.0/mustache.js"></script>
+
+    <link rel="stylesheet" href="M4Bsearch.css">
 </head>
 
 <body>
@@ -74,27 +75,30 @@ $(document).ready(function () {
 
         const startIndex = (currentPage - 1) * 10;
 
-        $.getJSON(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(currentQuery)}&startIndex=${startIndex}&maxResults=10&key=${apiKey}`, function (data) {
+        $.getJSON(
+            `https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(currentQuery)}&startIndex=${startIndex}&maxResults=10&key=${apiKey}`,
+            function (data) {
 
-            const results = data.items || [];
-            $("#results").empty();
+                const results = data.items || [];
+                $("#results").empty();
 
-            $("#pageInfo").text("Page: " + currentPage);
+                $("#pageInfo").text("Page: " + currentPage);
 
-            results.forEach(book => {
+                results.forEach(book => {
 
-                const info = book.volumeInfo;
+                    const info = book.volumeInfo;
 
-                const html = Mustache.render($("#book-template").html(), {
-                    id: book.id,
-                    title: info.title || "No title",
-                    authors: (info.authors || ["Unknown"]).join(", "),
-                    img: info.imageLinks ? info.imageLinks.thumbnail : ""
+                    const html = Mustache.render($("#book-template").html(), {
+                        id: book.id,
+                        title: info.title || "No title",
+                        authors: (info.authors || ["Unknown"]).join(", "),
+                        img: info.imageLinks ? info.imageLinks.thumbnail : ""
+                    });
+
+                    $("#results").append(html);
                 });
-
-                $("#results").append(html);
-            });
-        });
+            }
+        );
     }
 
     $(document).on("click", ".book", function () {
